@@ -33,15 +33,11 @@ RUN sh /etc/apache2/ssl/gen_ssl_cert.sh
 RUN a2enmod ssl
 
 # # configure vhost to listen to ssh before reloading apache2
-
-RUN sed -i 's/SSLCertificateFile/\#SSLCertificateFile/g' /etc/apache2/sites-available/default-ssl.conf
-RUN sed -i 's/SSLCertificateKeyFile/\#SSLCertificateKeyFile/g' /etc/apache2/sites-available/default-ssl.conf
-
-RUN echo "SSLCertificateFile /etc/apache2/ssl/apache.cert" >> /etc/apache2/sites-available/default-ssl.conf
-RUN echo "SSLCertificateKeyFile /etc/apache2/ssl/apache.key" >> /etc/apache2/sites-available/default-ssl.conf
+RUN sed -i 's|/etc/ssl/certs/ssl-cert-snakeoil.pem|/etc/apache2/ssl/apache.cert|' /etc/apache2/sites-available/default-ssl.conf
+RUN sed -i 's|/etc/ssl/private/ssl-cert-snakeoil.key|/etc/apache2/ssl/apache.key|' /etc/apache2/sites-available/default-ssl.conf
 
 RUN a2ensite default-ssl.conf
 
-CMD service apache2 start &&\
+CMD service apache2 restart &&\
 /bin/bash
 
