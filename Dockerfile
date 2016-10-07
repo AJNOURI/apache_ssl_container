@@ -28,6 +28,8 @@ RUN mkdir /etc/apache2/ssl
 ADD gen_ssl_cert.sh /etc/apache2/ssl/gen_ssl_cert.sh
 ADD test.php /var/www/html/test.php
 
+# Generate a slf-signed certificate with openssl
+# This is the file to customize for your organization parameters
 RUN sh /etc/apache2/ssl/gen_ssl_cert.sh
 
 # enable apache ssl module
