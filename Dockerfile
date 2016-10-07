@@ -41,6 +41,8 @@ RUN sed -i 's|/etc/ssl/private/ssl-cert-snakeoil.key|/etc/apache2/ssl/apache.key
 
 RUN a2ensite default-ssl.conf
 
+VOLUME /etc/apache2
+
 CMD service apache2 restart &&\
 /bin/bash
 
